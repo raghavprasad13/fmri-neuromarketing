@@ -8,7 +8,7 @@
 # * RcppCNPy
 # * progress
 # 
-# Last updated: 15 August 2020
+# Last updated: 04 February 2021
 # Author: Raghav Prasad
 
 
@@ -43,7 +43,7 @@ if(FSLDIR == '')
 
 dataset_path <- opt$dataset
 
-parcel_path <- file.path(dataset_path, '..', 'Resampled_Juelich_Atlas.nii.gz')
+parcel_path <- 'Resampled_Juelich_Atlas.nii.gz'
 vid_scan_dirs <- Sys.glob(file.path(dataset_path, 'sub*', 'func', 'video_scans'))
 
 total <- length(vid_scan_dirs)
@@ -72,9 +72,9 @@ for (vid_scan_dir in vid_scan_dirs) {
             corr_zero_indices <- which(adj_mat_corr == 0)			# Get the indices of the zero elements in the bivariate correlation matrix
             adj_mat_part$estimate[corr_zero_indices] = 0			# Set the elements of the partial correlation matrix indexed by corr_zero_indices to zero
 
-            vid_scan_name <- strsplit(scan_path, '/')[[1]]
-            vid_scan_name <- vid_scan_name[length(vid_scan_name)]
-            vid_scan_name <- substr(vid_scan_name, 1, 8)
+            vid_scan_path_list <- strsplit(scan_path, '/')[[1]]
+            vid_scan_name_w_ext <- vid_scan_path_list[length(vid_scan_path_list)]
+            vid_scan_name <- substr(vid_scan_name_w_ext, 1, 8)
 
             adj_mat_path <- file.path(vid_scan_dir, paste(vid_scan_name, "adj_mat.npy", sep='_'))
             percolation_path <- file.path(vid_scan_dir, paste(vid_scan_name, "avg_node_vals.npy", sep='_'))
